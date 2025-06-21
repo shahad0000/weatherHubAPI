@@ -11,6 +11,7 @@ const getWeather = async (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
 
     let weather = await WeatherCollection.findOne({ lat, lon });
+    let source = "cache"
     // if no fresh weather data is found get it from the API. 
     if (!weather) {
       const data = await weatherData(lat, lon);
@@ -21,6 +22,7 @@ const getWeather = async (req: Request, res: Response, next: NextFunction) => {
         data,
         fetchedAt: new Date(),
       });
+      source = "api"
     }
 
     // Log weather to history collection
@@ -33,7 +35,10 @@ const getWeather = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // Return weather
-    res.status(OK).json(weather);
+    res.status(OK).json({
+        ...weather.toObject(),
+        source,
+    });
   } catch (error) {
     next(error);
   }
