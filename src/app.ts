@@ -25,7 +25,7 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000", 
     credentials: true,
   })
 );
@@ -56,7 +56,7 @@ app.use(historyRoutes);
 
 // Basic route
 app.get("/", (req: Request, res: Response) => {
-  res.status(OK).json({ message: "List & Items API - Welcome!" });
+  res.status(OK).json({ message: "This is weatherHubAPI - Welcome!" });
 });
 
 // Error handling middleware
