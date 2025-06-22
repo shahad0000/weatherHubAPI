@@ -62,14 +62,16 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     // Set cookies
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: !dev,
       maxAge: 15 * 60 * 1000, // 15 minutes
+      secure: !dev,
+      sameSite: dev ? "lax" : "none",
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: !dev,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: !dev,
+      sameSite: dev ? "lax" : "none",
     });
 
     res.status(OK).json({
