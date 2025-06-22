@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import * as AuthService from '../services/auth.service';
-import { AppError } from '../utils/error';
-import { AuthRequest } from '../middleware/auth.middleware';
-import { dev } from '../utils/helpers';
-import { CREATED, OK } from '../utils/http-status';
+import { Request, Response, NextFunction } from "express";
+import * as AuthService from "../services/auth.service";
+import { AppError } from "../utils/error";
+import { AuthRequest } from "../middleware/auth.middleware";
+import { dev } from "../utils/helpers";
+import { CREATED, OK } from "../utils/http-status";
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -15,22 +15,22 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // Set cookies
-    res.cookie('accessToken', accessToken, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: !dev,
       maxAge: 15 * 60 * 1000, // 15 minutes
-      sameSite: 'none',
+      secure: !dev ? true : false,
+      sameSite: dev ? "lax" : "none",
     });
 
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: !dev,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: 'none',
+      secure: !dev ? true : false,
+      sameSite: dev ? "lax" : "none",
     });
-    
+
     res.status(CREATED).json({
-      status: 'success',
+      status: "success",
       data: {
         // Remove password from output
         user: {
@@ -60,20 +60,20 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     // Set cookies
-    res.cookie('accessToken', accessToken, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: !dev,
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: !dev,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(OK).json({
-      status: 'success',
+      status: "success",
       data: {
         // Remove password from output
         user: {
@@ -93,46 +93,50 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const signOut = async (req: Request, res: Response) => {
-  res.cookie('accessToken', 'none', {
+  res.cookie("accessToken", "none", {
     expires: new Date(Date.now() + 5 * 1000),
     httpOnly: true,
   });
-  res.cookie('refreshToken', 'none', {
+  res.cookie("refreshToken", "none", {
     expires: new Date(Date.now() + 5 * 1000),
     httpOnly: true,
   });
 
   res.status(OK).json({
-    status: 'success',
-    message: 'Signed out successfully',
+    status: "success",
+    message: "Signed out successfully",
   });
 };
 
-const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+const refreshToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
 
     if (!refreshToken) {
-      throw new AppError('Refresh token not provided', 401);
+      throw new AppError("Refresh token not provided", 401);
     }
 
     const tokens = await AuthService.refreshToken(refreshToken);
 
     // Set new cookies
-    res.cookie('accessToken', tokens.accessToken, {
+    res.cookie("accessToken", tokens.accessToken, {
       httpOnly: true,
       secure: !dev,
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
-    res.cookie('refreshToken', tokens.refreshToken, {
+    res.cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       secure: !dev,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(OK).json({
-      status: 'success',
+      status: "success",
       data: tokens,
     });
   } catch (error) {
@@ -140,32 +144,30 @@ const refreshToken = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-const deleteAccount = async (req: AuthRequest, res: Response, next: NextFunction) => {
+const deleteAccount = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     await AuthService.deleteAccount(req.user.id);
 
-    res.cookie('accessToken', 'none', {
+    res.cookie("accessToken", "none", {
       expires: new Date(Date.now() + 5 * 1000),
       httpOnly: true,
     });
-    res.cookie('refreshToken', 'none', {
+    res.cookie("refreshToken", "none", {
       expires: new Date(Date.now() + 5 * 1000),
       httpOnly: true,
     });
 
     res.status(OK).json({
-      status: 'success',
-      message: 'Account deleted successfully',
+      status: "success",
+      message: "Account deleted successfully",
     });
   } catch (error) {
     next(error);
   }
 };
 
-export {
-  signUp,
-  signIn,
-  signOut,
-  refreshToken,
-  deleteAccount,
-};
+export { signUp, signIn, signOut, refreshToken, deleteAccount };

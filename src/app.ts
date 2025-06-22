@@ -25,7 +25,7 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://weatherhubui.onrender.com"], 
+    origin: dev ? 'http://localhost:5173' : 'https://weatherhubui.onrender.com',
     credentials: true,
   })
 );
