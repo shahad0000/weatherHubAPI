@@ -19,12 +19,14 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       httpOnly: true,
       secure: !dev,
       maxAge: 15 * 60 * 1000, // 15 minutes
+      sameSite: 'none',
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: !dev,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      sameSite: 'none',
     });
     
     res.status(CREATED).json({
