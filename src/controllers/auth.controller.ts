@@ -43,6 +43,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       },
     });
   } catch (error) {
+    console.error("SIGNUP ERROR:", error);
     next(error);
   }
 };
