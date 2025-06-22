@@ -11,8 +11,8 @@ import { OK, INTERNAL_SERVER_ERROR } from "./utils/http-status";
 import { connectDB, deleteAllCollections } from "./config/db";
 import { AppError } from "./utils/error";
 import authRoutes from "./routes/auth.routes";
-import weatherRoutes from "./routes/weather.routes"
-import historyRoutes from "./routes/history.routes"
+import weatherRoutes from "./routes/weather.routes";
+import historyRoutes from "./routes/history.routes";
 
 // // Delete all collections
 // deleteAllCollections();
@@ -25,14 +25,7 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: function (origin, callback) {
-      const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",");
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: ["http://localhost:5173", "https://weatherhubui.onrender.com"], 
     credentials: true,
   })
 );
@@ -55,7 +48,7 @@ app.use(cookieParser());
   3) This function checks for an existing email, create a user in the db, generates tokens and return a promise of a user accessToken and a refreshToken.
   4) The controller (signup function) will await and destructure the output then store tokens to the cookies with protection ( httpOnly: true, secure:!dev).
   5) Finally, send a success response to the user with json containing the data except the password.
-*/ 
+*/
 
 // Routes
 app.use("/auth", authRoutes);
