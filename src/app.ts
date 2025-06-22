@@ -87,6 +87,6 @@ app.use(
 );
 
 // Start server
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   logger.info(`Server is running on port ${port}`);
 });

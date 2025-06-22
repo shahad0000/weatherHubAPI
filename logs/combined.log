@@ -473,3 +473,20 @@
 {"level":"info","message":"GET /weather?lat=24.71&lon=46.68 200 580 - 351.403 ms","timestamp":"2025-06-21T11:43:08.419Z"}
 {"level":"info","message":"GET /history?limit=10&skip=0&sort=-requestedAt 200 1381 - 221.805 ms","timestamp":"2025-06-21T11:43:21.361Z"}
 {"level":"info","message":"GET /history?count=true 200 12 - 215.498 ms","timestamp":"2025-06-21T11:43:29.690Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-21T11:48:01.973Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-21T11:48:03.280Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-21T11:48:08.890Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-21T11:48:10.254Z"}
+{"level":"info","message":"POST /interview 404 149 - 60.694 ms","timestamp":"2025-06-21T17:30:43.449Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-22T09:31:05.396Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-22T09:31:09.541Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-22T09:31:27.126Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-22T09:31:28.318Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-22T09:31:40.306Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-22T09:31:41.562Z"}
+{"level":"info","message":"Server is running on port 3000","timestamp":"2025-06-22T10:17:53.117Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-22T10:17:54.941Z"}
+{"level":"error","message":"Error:","timestamp":"2025-06-22T10:18:49.275Z"}
+{"level":"info","message":"GET /weather?lat=24.71&lon=46.68 401 1216 - 25.892 ms","timestamp":"2025-06-22T10:18:49.306Z"}
+{"level":"info","message":"POST /auth/signin 200 781 - 342.728 ms","timestamp":"2025-06-22T10:18:56.879Z"}
+{"level":"info","message":"GET /weather?lat=24.71&lon=46.68 200 576 - 1523.869 ms","timestamp":"2025-06-22T10:19:05.886Z"}

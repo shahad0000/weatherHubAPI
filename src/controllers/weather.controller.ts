@@ -12,6 +12,7 @@ const getWeather = async (req: Request, res: Response, next: NextFunction) => {
 
     let weather = await WeatherCollection.findOne({ lat, lon });
     let source = "cache"
+    
     // if no fresh weather data is found get it from the API. 
     if (!weather) {
       const data = await weatherData(lat, lon);
