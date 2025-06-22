@@ -23,15 +23,13 @@ connectDB();
 const app: Express = express();
 
 // Middleware
+app.use(
+  cors({
+    origin: dev ? 'http://localhost:5173' : 'https://weatherhubui.onrender.com',
 
-app.use(cors());
-
-// app.use(
-//   cors({
-//     origin: dev ? 'http://localhost:5173' : 'https://weatherhubui.onrender.com',
-//     credentials: true,
-//   })
-// );
+    credentials: true,
+  })
+);
 
 app.use(helmet());
 app.use(
