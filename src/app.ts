@@ -26,7 +26,6 @@ const app: Express = express();
 app.use(
   cors({
     origin: dev ? 'http://localhost:5173' : 'https://weatherhubui.onrender.com',
-
     credentials: true,
   })
 );
