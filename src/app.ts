@@ -25,10 +25,18 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000", 
+    origin: function (origin, callback) {
+      const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",");
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(helmet());
 app.use(
   morgan("tiny", {
