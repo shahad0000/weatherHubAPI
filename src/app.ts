@@ -23,13 +23,10 @@ connectDB();
 const app: Express = express();
 
 // Middleware
-app.use(
-  cors({
-    origin: dev ? 'http://localhost:5173' : 'https://weatherhubui.onrender.com',
-    credentials: true,
-  })
-);
-
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
+}));
 app.use(helmet());
 app.use(
   morgan("tiny", {
@@ -87,7 +84,9 @@ app.use(
   }
 );
 
+const serverPort = Number(process.env.PORT) || 3000;
+
 // Start server
-app.listen(process.env.PORT, () => {
-  logger.info(`Server is running on port ${port}`);
+app.listen(serverPort, () => {
+  logger.info(`Server is running on port ${serverPort}`);
 });
